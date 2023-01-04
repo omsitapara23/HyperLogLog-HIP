@@ -1,5 +1,5 @@
-#if !defined(HYPERLOGLOG_HPP)
-#define HYPERLOGLOG_HPP
+#if !defined(HYPERLOGLOGPP_HPP)
+#define HYPERLOGLOGPP_HPP
 
 /**
  * @file hyperloglog++.hpp
@@ -251,4 +251,4 @@ protected:
 
 
 
-#endif // !defined(HYPERLOGLOG_HPP)
+#endif // !defined(HYPERLOGLOGPP_HPP)
