@@ -173,10 +173,10 @@ public:
      * @param[in] str string to add
      */
     void add(std::string str){
-        uint32_t hash[2];
-        MurmurHash3_x86_32(str.c_str(), str.length(), HLL_HASH_SEED,hash);
-        uint32_t index = hash[0] >> (64 - b_);
-        uint8_t rank = _GET_CLZL((hash[0] << b_), 64 - b_);
+        uint32_t hash;
+        MurmurHash3_x86_32(str.c_str(), str.length(), HLL_HASH_SEED,(void*)&hash);
+        uint32_t index = hash >> (32 - b_);
+        uint8_t rank = _GET_CLZL((hash << b_), 32 - b_);
         M_[index] = std::max(rank, M_[index]);
     }
 
