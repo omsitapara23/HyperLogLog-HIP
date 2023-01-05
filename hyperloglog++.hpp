@@ -20,7 +20,7 @@
 
 #define HLL_HASH_SEED 313
 
-#define _GET_CLZL(x, b) (uint8_t)std::min(b, ::__builtin_clzl(x)) + 1
+#define _GET_CLZ(x, b) (uint8_t)std::min(b, ::__builtin_clz(x)) + 1
 
 using namespace std;
 
@@ -176,7 +176,7 @@ public:
         uint32_t hash;
         MurmurHash3_x86_32(str.c_str(), str.length(), HLL_HASH_SEED,(void*)&hash);
         uint32_t index = hash >> (32 - b_);
-        uint8_t rank = _GET_CLZL((hash << b_), 32 - b_);
+        uint8_t rank = _GET_CLZ((hash << b_), 32 - b_);
         M_[index] = std::max(rank, M_[index]);
     }
 
@@ -196,6 +196,31 @@ public:
         for (uint32_t r = 0; r < m_; ++r) {
             M_[r] = std::max(M_[r], other.M_[r]);
         }
+    }
+
+    string givestr() {
+        char curr;
+        string res = "";
+        for(int r =0; r < m_; r++){
+            curr = static_cast<char>(M_[r]);
+            res += string(1,curr);
+        }
+        return res;
+    }
+
+    void merge(std::string str) {
+        uint8_t val;
+        for (uint32_t r = 0; r < m_; ++r) {
+            val = str[r];
+            M_[r] = std::max(M_[r], val);
+        }
+    }
+
+    void pr() {
+        for (uint32_t r = 0; r < m_; ++r) {
+            cout << unsigned(M_[r]) << " ";
+        }
+        cout << endl;
     }
     
 
